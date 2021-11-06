@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "discord.js-12": "^1.0.2",
+    "jquery": "^3.6.0",
+    "jsdom": "^18.0.1"
+  }
+}
