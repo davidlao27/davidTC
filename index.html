@@ -134,10 +134,10 @@
             const channel = urlParams.get('channel');
 
             if (il != '') {
-                if (nm == false) {
-                    window.location.href = "https://davidlao27.github.io/davidTC" + "?host=" + ih + "&emojis=" + il + "&welcome=" + iw + "&channel=" + channel;
-                } else {
+                if (nm == "on") {
                     window.location.href = "https://davidlao27.github.io/davidTC" + "?host=" + ih + "&emojis=" + il + "&welcome=" + iw + "&nm=1" + "&channel=" + channel;
+                } else {
+                    window.location.href = "https://davidlao27.github.io/davidTC" + "?host=" + ih + "&emojis=" + il + "&welcome=" + iw + "&channel=" + channel;
                 }
             }
         }
