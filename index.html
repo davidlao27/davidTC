@@ -113,7 +113,7 @@
         }
     </style>
 </head>
-<body bgcolor="#333">
+<body bgcolor="#333" onload="checkSound()">
     <script>
         function toggleConf() {
             if (document.getElementById("btmnav").style.visibility != "hidden") {
@@ -127,12 +127,35 @@
             var ih = document.getElementById("inputhost").value;
             var il = document.getElementById("inputlist").value;
             var iw = document.getElementById("inputwmsg").value;
+            var nm = document.getElementById("inputnewmsg").value;
+
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const channel = urlParams.get('channel');
 
             if (il != '') {
-                window.location.href = "https://davidlao27.github.io/davidTC" + "?host=" + ih + "&emojis=" + il + "&welcome=" + iw;
+                if (nm == false) {
+                    window.location.href = "https://davidlao27.github.io/davidTC" + "?host=" + ih + "&emojis=" + il + "&welcome=" + iw + "&channel=" + channel;
+                } else {
+                    window.location.href = "https://davidlao27.github.io/davidTC" + "?host=" + ih + "&emojis=" + il + "&welcome=" + iw + "&nm=1" + "&channel=" + channel;
+                }
             }
         }
+
+        function checkSound() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const nmcheck = urlParams.get('nm');
+            const popup = document.getElementById("audioWarn");
+
+            if (nmcheck == "1") {popup.style.visibility = "visible";} else {popup.style.visibility = "hidden"; popup.style.position = "absolute";}
+        }
+
+        function shutPopup() {const popup = document.getElementById("audioWarn"); popup.style.visibility = "hidden"; popup.style.position = "absolute";}
     </script>
+    <div class="topnav" id="audioWarn">
+        <p onclick="shutPopup()" class="unselectable">WARNING: Click this first for the new message sounds to play! <a href="https://developer.chrome.com/blog/autoplay/">Why?</a></p>
+    </div>
 
     <div class="topnav">
         <p onclick="toggleConf()" class="unselectable">Configuration</p>
@@ -148,6 +171,8 @@
         <br><br>
         <font size="3">Welcome Message</font><br>
         <input id="inputwmsg"></input>
+        <br><br>
+        <input id="inputnewmsg" type="checkbox">New message sound (newmsg.mp3*)</input>
         <br><br>
         <button onclick="applyUrl()">Apply</button>
         <br><br>
@@ -175,6 +200,7 @@
 
         const domain = urlParams.get('host');
         const emojis = urlParams.get('emojis');
+
     if (emojis) {
         const emojilist = emojis.split(",");
         var UsedEmojiList = {};
@@ -224,8 +250,11 @@ return text.replace(new RegExp(patterns.join('|'),'g'), function (match) {
         var stickyPin = document.getElementById("pinner");
         var stickyPinHolder = document.getElementById("pholder");
 
+        const newm = urlParams.get('nm');
+        const channl = urlParams.get('channel');
+
         const client = new tmi.Client({
-	        channels: [ 'davidlao_' ]
+	        channels: [ channl || "davidlao_" ]
         });
 
         client.connect();
@@ -240,9 +269,11 @@ return text.replace(new RegExp(patterns.join('|'),'g'), function (match) {
             element.appendChild(para);
             setFocusOnDivWithId("messages");
 
-            //var ding = new Audio('newmsg.mp3');
-            //ding.volume = 0.3;
-            //ding.play();
+            if (newm == "1") {
+                var ding = new Audio('newmsg.mp3');
+                ding.volume = 0.3;
+                ding.play();
+            }
 
             if (tags["username"] == "akridiki" || tags["username"] == "davidlao_") {
                 //Admin Command Handler
