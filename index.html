@@ -127,14 +127,14 @@
             var ih = document.getElementById("inputhost").value;
             var il = document.getElementById("inputlist").value;
             var iw = document.getElementById("inputwmsg").value;
-            var nm = document.getElementById("inputnewmsg").value;
+            var nm = document.getElementById("inputnewmsg").checked;
 
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
             const channel = urlParams.get('channel');
 
             if (il != '') {
-                if (nm == "on") {
+                if (nm == true) {
                     window.location.href = "https://davidlao27.github.io/davidTC" + "?host=" + ih + "&emojis=" + il + "&welcome=" + iw + "&nm=1" + "&channel=" + channel;
                 } else {
                     window.location.href = "https://davidlao27.github.io/davidTC" + "?host=" + ih + "&emojis=" + il + "&welcome=" + iw + "&channel=" + channel;
