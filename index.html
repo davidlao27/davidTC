@@ -113,7 +113,7 @@
         }
     </style>
 </head>
-<body bgcolor="#333" onload="checkSound()">
+<body bgcolor="#333" onload="checkSound();">
     <script>
         function toggleConf() {
             if (document.getElementById("btmnav").style.visibility != "hidden") {
@@ -124,6 +124,7 @@
         }
 
         function applyUrl() {
+            var ic = document.getElementById("inputchannel").value;
             var ih = document.getElementById("inputhost").value;
             var il = document.getElementById("inputlist").value;
             var iw = document.getElementById("inputwmsg").value;
@@ -133,11 +134,11 @@
             const urlParams = new URLSearchParams(queryString);
             const channel = urlParams.get('channel');
 
-            if (il != '') {
-                if (nm == true) {
-                    window.location.href = "https://davidlao27.github.io/davidTC" + "?host=" + ih + "&emojis=" + il + "&welcome=" + iw + "&nm=1" + "&channel=" + channel;
+            if (il != '' && ic != '') {
+                if (nm === true) {
+                    window.location.href = "https://davidlao27.github.io/davidTC" + "?host=" + ih + "&emojis=" + il + "&welcome=" + iw + "&nm=1" + "&channel=" + ic;
                 } else {
-                    window.location.href = "https://davidlao27.github.io/davidTC" + "?host=" + ih + "&emojis=" + il + "&welcome=" + iw + "&channel=" + channel;
+                    window.location.href = "https://davidlao27.github.io/davidTC" + "?host=" + ih + "&emojis=" + il + "&welcome=" + iw + "&channel=" + ic;
                 }
             }
         }
@@ -171,6 +172,9 @@
         <br><br>
         <font size="3">Welcome Message</font><br>
         <input id="inputwmsg"></input>
+        <br><br>
+        <font size="3">Twitch Channel*</font><br>
+        <input id="inputchannel"></input>
         <br><br>
         <input id="inputnewmsg" type="checkbox">New message sound (newmsg.mp3*)</input>
         <br><br>
