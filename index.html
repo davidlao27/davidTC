@@ -271,6 +271,11 @@ return text.replace(new RegExp(patterns.join('|'),'g'), function (match) {
 
         const newm = urlParams.get('nm');
         const channl = urlParams.get('channel');
+        let speech = new SpeechSynthesisUtterance();
+        speech.lang = "en";
+        speech.rate = 1;
+        speech.volume = 0.7;
+        speech.pitch = 1;
 
         const client = new tmi.Client({
 	        channels: [ channl || "davidlao_" ]
@@ -310,6 +315,12 @@ return text.replace(new RegExp(patterns.join('|'),'g'), function (match) {
                     stickyPinHolder.style.opacity = 1;
                     var splitted = msg.split("!pin");
                     stickyPin.innerHTML = splitted[1];
+                }
+
+                if (msg.includes("!speak")) {
+                    var splittedspeak = msg.split("!speak");
+                    speech.text = splittedspeak[1];
+                    window.speechSynthesis.speak(speech);
                 }
             }
         });
